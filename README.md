@@ -150,71 +150,16 @@ Without `trigger-scope`, repeated trigger names can conflict because triggers ar
 
 This adapter uses CSS Scroll-Triggered Animations:
 
-- `timeline-trigger`
-- `animation-trigger`
-- `trigger-scope`
+- [`timeline-trigger`](https://caniuse.com/mdn-css_properties_timeline-trigger)
+- [`animation-trigger`](https://caniuse.com/mdn-css_properties_animation-trigger)
+- [`trigger-scope`](https://caniuse.com/mdn-css_properties_trigger-scope)
 
-At the time this README was written, this is a very new CSS feature. Chrome describes scroll-triggered animations as arriving in Chrome 145 and explains that these are time-based animations triggered when crossing a scroll offset.
+Check the linked Can I use pages before using this in production.
 
 The adapter is wrapped in `@supports`, so browsers without support will ignore the trigger logic. In unsupported browsers, Animate.css may behave like normal page-load Animate.css unless you add your own fallback.
 
 This repository intentionally does not include a JavaScript fallback. If you need production support across current stable browsers, use an `IntersectionObserver` fallback or keep this as a progressive enhancement.
 
-## CSS adapter
+## Adapter CSS
 
-```css
-@layer animate-scroll-triggered {
-  @supports (animation-trigger: --animate-trigger play-forwards) and
-            (timeline-trigger: --animate-trigger view() entry 100% exit 0%) {
-    .animate-triggered {
-      --animate-trigger-activation: entry 100% exit 0%;
-      --animate-trigger-active: entry 0% exit 100%;
-
-      trigger-scope: --animate-trigger;
-
-      timeline-trigger:
-        --animate-trigger
-        view()
-        var(--animate-trigger-activation)
-        /
-        var(--animate-trigger-active);
-
-      animation-trigger:
-        --animate-trigger
-        play-forwards
-        play-backwards;
-    }
-
-    .animate-triggered > .animate__animated {
-      animation-trigger:
-        --animate-trigger
-        play-forwards
-        play-backwards;
-    }
-
-    .animate-triggered--early {
-      --animate-trigger-activation: entry 60% exit 0%;
-    }
-
-    .animate-triggered--late {
-      --animate-trigger-activation: contain 25% contain 75%;
-    }
-
-    .animate-triggered--once {
-      animation-trigger:
-        --animate-trigger
-        play-forwards;
-    }
-
-    .animate-triggered--once > .animate__animated {
-      animation-trigger:
-        --animate-trigger
-        play-forwards;
-    }
-  }
-}
-```
-
-## License
-
-No license has been added yet.
+See [`animate-scroll-triggered.css`](./animate-scroll-triggered.css) for the full adapter code.
