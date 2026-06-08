@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Animate Scroll Triggered Demo</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  >
+  <link rel="stylesheet" href="./animate-scroll-triggered.css">
+
+  <style>
+    @layer demo {
+      * {
+        box-sizing: border-box;
+      }
+
+      :root {
+        --animate-duration: 1.4s;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        line-height: 1.5;
+        color: #111;
+        background: #f4f4f4;
+      }
+
+      header,
+      footer {
+        min-block-size: 100svh;
+        display: grid;
+        place-content: center;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      main {
+        display: grid;
+      }
+
+      section {
+        min-block-size: 145svh;
+        padding: 18svh 2rem 55svh;
+      }
+
+      .intro,
+      .card,
+      .grid {
+        margin-inline: auto;
+      }
+
+      .intro,
+      .card {
+        inline-size: min(100%, 44rem);
+      }
+
+      .card {
+        padding: 2rem;
+        border-radius: 1rem;
+        background: white;
+        box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.12);
+      }
+
+      .card h2 {
+        margin-block-start: 0;
+      }
+
+      .meta {
+        margin-block-start: 1rem;
+        padding: 0.75rem 1rem;
+        border-radius: 0.75rem;
+        overflow-wrap: anywhere;
+        background: #f0f0f0;
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+        font-size: 0.9rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+        gap: 1rem;
+        inline-size: min(100%, 54rem);
+      }
+
+      .grid > * {
+        display: grid;
+        place-content: center;
+        min-block-size: 9rem;
+        border-radius: 1rem;
+        background: white;
+        box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.12);
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      .grid > :nth-child(1) {
+        animation-delay: 0s;
+      }
+
+      .grid > :nth-child(2) {
+        animation-delay: 0.14s;
+      }
+
+      .grid > :nth-child(3) {
+        animation-delay: 0.28s;
+      }
+
+      .grid > :nth-child(4) {
+        animation-delay: 0.42s;
+      }
+
+      .grid > :nth-child(5) {
+        animation-delay: 0.56s;
+      }
+
+      .grid > :nth-child(6) {
+        animation-delay: 0.7s;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+        gap: 1rem;
+        inline-size: min(100%, 54rem);
+        margin-inline: auto;
+      }
+
+      .split > * {
+        padding: 2rem;
+        border-radius: 1rem;
+        background: white;
+        box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.12);
+      }
+
+      .tall-card {
+        min-block-size: 120svh;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="intro">
+      <h1>Animate Scroll Triggered</h1>
+      <p>
+        A tiny CSS-only scroll-trigger adapter for Animate.css.
+      </p>
+      <p>
+        Animate.css remains unchanged. The extra class only controls when the existing
+        time-based animation is played.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <article class="card animate__animated animate__fadeInUp animate-triggered">
+        <h2>1. Default reveal</h2>
+        <p>
+          The default trigger waits until the element has entered the viewport.
+          The animation stays active until the element leaves the viewport.
+        </p>
+
+        <p class="meta">
+          class="card animate__animated animate__fadeInUp animate-triggered"
+        </p>
+      </article>
+    </section>
+
+    <section>
+      <article class="card animate__animated animate__fadeInLeft animate-triggered animate-triggered--early">
+        <h2>2. Early trigger</h2>
+        <p>
+          This element starts earlier. Use this when the animation should begin while the
+          element is still entering the viewport.
+        </p>
+
+        <p class="meta">
+          class="card animate__animated animate__fadeInLeft animate-triggered animate-triggered--early"
+        </p>
+      </article>
+    </section>
+
+    <section>
+      <article class="card animate__animated animate__fadeInDown animate-triggered animate-triggered--late">
+        <h2>3. Late trigger</h2>
+        <p>
+          This element starts later. Use this when the element should be clearly inside
+          the viewport before the animation begins.
+        </p>
+
+        <p class="meta">
+          class="card animate__animated animate__fadeInDown animate-triggered animate-triggered--late"
+        </p>
+      </article>
+    </section>
+
+    <section>
+      <article
+        class="card animate__animated animate__zoomIn animate-triggered"
+        style="--animate-trigger-activation: entry 80% exit 0%; --animate-duration: 1.8s;"
+      >
+        <h2>4. Per-element control</h2>
+        <p>
+          Custom properties can adjust the trigger range on a single element.
+          Animate.css properties such as duration still work normally.
+        </p>
+
+        <p class="meta">
+          style="--animate-trigger-activation: entry 80% exit 0%; --animate-duration: 1.8s;"
+        </p>
+      </article>
+    </section>
+
+    <section>
+      <article class="card animate__animated animate__fadeInUp animate-triggered animate-triggered--once">
+        <h2>5. Play forward only</h2>
+        <p>
+          This animation plays when entering the trigger range, but it does not reverse
+          when leaving it.
+        </p>
+
+        <p class="meta">
+          class="card animate__animated animate__fadeInUp animate-triggered animate-triggered--once"
+        </p>
+      </article>
+    </section>
+
+    <section>
+      <div class="grid animate-triggered">
+        <div class="animate__animated animate__fadeInUp">1</div>
+        <div class="animate__animated animate__fadeInUp">2</div>
+        <div class="animate__animated animate__fadeInUp">3</div>
+        <div class="animate__animated animate__fadeInUp">4</div>
+        <div class="animate__animated animate__fadeInUp">5</div>
+        <div class="animate__animated animate__fadeInUp">6</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="split">
+        <article class="animate__animated animate__fadeInLeft animate-triggered">
+          <h2>7a. Side by side</h2>
+          <p>
+            This element uses the same internal trigger name as the next one.
+          </p>
+        </article>
+
+        <article
+          class="animate__animated animate__fadeInRight animate-triggered"
+          style="animation-delay: 0.15s;"
+        >
+          <h2>7b. Scoped trigger</h2>
+          <p>
+            trigger-scope prevents one element from stealing another element's trigger.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <article
+        class="card tall-card animate__animated animate__fadeIn animate-triggered"
+        style="--animate-trigger-activation: entry 70% exit 30%;"
+      >
+        <h2>8. Tall element edge case</h2>
+        <p>
+          This element is taller than the viewport. It uses an entry/exit range because
+          a contain range would not be a good fit for an oversized element.
+        </p>
+
+        <p class="meta">
+          style="--animate-trigger-activation: entry 70% exit 30%;"
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>End of demo</p>
+  </footer>
+</body>
+</html>
