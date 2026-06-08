@@ -1,0 +1,65 @@
+/*
+  Animate Scroll Triggered
+  Scroll-trigger adapter for Animate.css.
+
+  Usage:
+  <div class="animate__animated animate__fadeInUp animate-triggered">
+    ...
+  </div>
+
+  Animate.css stays unchanged:
+  - .animate__animated enables Animate.css.
+  - .animate__fadeInUp, .animate__zoomIn, ... define the animation.
+  - .animate-triggered only controls when the animation is played.
+*/
+
+@layer animate-scroll-triggered {
+  @supports (animation-trigger: --animate-trigger play-forwards) and
+            (timeline-trigger: --animate-trigger view() entry 100% exit 0%) {
+    :where(.animate-triggered) {
+      --animate-trigger-activation: entry 100% exit 0%;
+      --animate-trigger-active: entry 0% exit 100%;
+
+      trigger-scope: --animate-trigger;
+
+      timeline-trigger:
+        --animate-trigger
+        view()
+        var(--animate-trigger-activation)
+        /
+        var(--animate-trigger-active);
+
+      animation-trigger:
+        --animate-trigger
+        play-forwards
+        play-backwards;
+    }
+
+    :where(.animate-triggered) > :where(.animate__animated) {
+      animation-trigger:
+        --animate-trigger
+        play-forwards
+        play-backwards;
+    }
+
+    :where(.animate-triggered--early) {
+      --animate-trigger-activation: entry 60% exit 0%;
+    }
+
+    :where(.animate-triggered--late) {
+      --animate-trigger-activation: contain 25% contain 75%;
+    }
+
+    :where(.animate-triggered--once) {
+      animation-trigger:
+        --animate-trigger
+        play-forwards;
+    }
+
+    :where(.animate-triggered--once) > :where(.animate__animated) {
+      animation-trigger:
+        --animate-trigger
+        play-forwards;
+    }
+  }
+}
