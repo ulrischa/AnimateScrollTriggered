@@ -166,7 +166,7 @@ This repository intentionally does not include a JavaScript fallback. If you nee
 @layer animate-scroll-triggered {
   @supports (animation-trigger: --animate-trigger play-forwards) and
             (timeline-trigger: --animate-trigger view() entry 100% exit 0%) {
-    :where(.animate-triggered) {
+    .animate-triggered {
       --animate-trigger-activation: entry 100% exit 0%;
       --animate-trigger-active: entry 0% exit 100%;
 
@@ -185,28 +185,28 @@ This repository intentionally does not include a JavaScript fallback. If you nee
         play-backwards;
     }
 
-    :where(.animate-triggered) > :where(.animate__animated) {
+    .animate-triggered > .animate__animated {
       animation-trigger:
         --animate-trigger
         play-forwards
         play-backwards;
     }
 
-    :where(.animate-triggered--early) {
+    .animate-triggered--early {
       --animate-trigger-activation: entry 60% exit 0%;
     }
 
-    :where(.animate-triggered--late) {
+    .animate-triggered--late {
       --animate-trigger-activation: contain 25% contain 75%;
     }
 
-    :where(.animate-triggered--once) {
+    .animate-triggered--once {
       animation-trigger:
         --animate-trigger
         play-forwards;
     }
 
-    :where(.animate-triggered--once) > :where(.animate__animated) {
+    .animate-triggered--once > .animate__animated {
       animation-trigger:
         --animate-trigger
         play-forwards;
